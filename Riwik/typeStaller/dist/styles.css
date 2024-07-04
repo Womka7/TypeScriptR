@@ -6,7 +6,7 @@ body {
     max-width: 960px;
     margin: 0 auto;
 }
-h1{
+h1,h2{
     margin: 40px auto;
     color: #ff0aa7;
     text-align: center;
@@ -28,6 +28,10 @@ li p{
     color: #333;
     margin: 8px 0 0;
 }
+section{
+    display: flex;
+    flex-wrap: wrap;
+    }
 form{
     padding: 60px;
     margin-top: 60px;
@@ -61,3 +65,4 @@ button{
     min-width: 80px;
     border-radius: 4px;
 }
+    
