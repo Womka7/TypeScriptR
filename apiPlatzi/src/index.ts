@@ -1,26 +1,29 @@
-import { IResponseProducts } from "../src/interface/i-response-products.js"
+// import { IResponseCategories } from "./interface/i-response-categoriess.js"
+
+import { IResponseProducts } from "./interface/i-response-categoriess";
+
 
 const sectionProducts=document.querySelector(".section-products") as  HTMLElement;
 
 async function llamadoApi():Promise<void> {
-    const response= await fetch ("https://api.escuelajs.co/api/v1/products");
-    const productsApi:IResponseProducts[] =await response.json();
+    const response= await fetch ("https://fakestoreapi.com/products");
+    const productsApi:IResponseProducts[] = await response.json();
     insertCards(productsApi);
    
 }
 
 function insertCards(productsApi:IResponseProducts[]):void {
-    productsApi.forEach((product:IResponseProducts,index:number) => {
+    productsApi.forEach((product: IResponseProducts,index:number) => {
 
         if(index<=20){
             sectionProducts.innerHTML +=`
             <article class="cart">
-                <h2>${product.title}</h2>
-                <div id="img-product"><img src="${product.images[0].sp}" alt="Image Product"></div>
-                <div id="info-product">
-                    <p>${product.price}</p>
-                    <span>${product.description}</span>
-                    <p>${product.category.name}</p>
+                <div class = "title-container"> <h2>${product.title}</h2> </div>
+                
+                <div id="img-product" ><img src="${product.image}" alt=${product.title}></div>
+                <div class="info">
+                    <p id="price">$ ${product.price}</p>
+                    <p id="categ">${product.category}</p>
                 </div>
             </article>
         `
@@ -28,5 +31,6 @@ function insertCards(productsApi:IResponseProducts[]):void {
         
     });
 }
+
 
 llamadoApi()
