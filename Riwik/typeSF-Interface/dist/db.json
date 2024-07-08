@@ -1,0 +1,16 @@
+{
+    "users":[
+        {
+            "id":1,
+            "firstName":"Stiven",
+            "lastName":"Zuluaga",
+            "age":22
+        },
+        {
+            "id":2,
+            "firstName":"juana",
+            "lastName":"Perez",
+            "age":32
+        }
+    ]
+}
