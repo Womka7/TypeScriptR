@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ListTemplate = void 0;
 class ListTemplate {
     constructor(container) {
         this.container = container;
@@ -8,9 +9,16 @@ class ListTemplate {
         const li = document.createElement("li");
         const h4 = document.createElement("h4");
         h4.innerText = heading;
-        li.appendChild(h4);
+        li.append(h4);
         const p = document.createElement("p");
         p.innerText = item.format();
         li.append(p);
+        if (pos === "start") {
+            this.container.prepend(li);
+        }
+        else {
+            this.container.append(li);
+        }
     }
 }
+exports.ListTemplate = ListTemplate;

@@ -1,48 +1,28 @@
 "use strict";
-// ----dom con type script
+Object.defineProperty(exports, "__esModule", { value: true });
+const Invoice_js_1 = require("./classes/Invoice.js");
+const Payment_js_1 = require("./classes/Payment.js");
+const ListTemplate_js_1 = require("./classes/ListTemplate.js");
+// const invOne = new Invoice("Steven", "Work in riwi", 200);
+// const invTwo = new Invoice("Jairo", "Work in the website", 800);
+// let invoices: Invoice[] = [invOne, invTwo];
 const form = document.querySelector(".new-item-form");
+// console.log(form.children);
 const type = document.querySelector("#type");
 const toFrom = document.querySelector("#tofrom");
 const details = document.querySelector("#details");
 const amount = document.querySelector("#amount");
+const ul = document.querySelector(".item-list");
+const list = new ListTemplate_js_1.ListTemplate(ul);
 form.addEventListener("submit", (ev) => {
     ev.preventDefault();
-    console.log(`${type.value.toUpperCase()} is from: ${toFrom.value} details: ${details.value} the amount is: ${amount.valueAsNumber}`);
-});
-//-----------arreglos
-let names = ["mario", "luigi", "yoshi"];
-names.push("princess");
-console.log(names);
-let numbers = [1, 2, 3, 4];
-numbers.push("30");
-console.log(numbers);
-//-----------objetos 
-let useer = {
-    firstName: "steven",
-    lastName: 'Zuluaga',
-    age: 42
-};
-useer = {
-    firstName: "mario",
-    lastName: "bros",
-    age: 45
-};
-console.log(useer.firstName.length);
-//-------------funciones
-const add = (num1, num2) => {
-    console.log(num1 + num2);
-};
-add(5, 8);
-const add1 = (num1, num2) => {
-    const suma = num1 + num2;
-    return suma;
-};
-console.log(add1(8, 8));
-const add2 = (num1, num2) => {
-    let suma = 0;
-    if (num2) {
-        suma = num1 + num2;
+    let doc;
+    if (type.value == "invoice") {
+        doc = new Invoice_js_1.Invoice(toFrom.value, details.value, amount.valueAsNumber);
     }
-    return suma;
-};
-console.log(add2(5));
+    else {
+        doc = new Payment_js_1.Payment(toFrom.value, details.value, amount.valueAsNumber);
+    }
+    list.render(doc, type.value, "end");
+});
+// console.log(invoices);
