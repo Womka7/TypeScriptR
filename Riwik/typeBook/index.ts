@@ -38,7 +38,7 @@ const dataToLogin:BodyRequestLogin={
     email: 'prueba@prueba.pru',
     password: 'C0ntr4S3gu++r4'
 }
-postLogin(dataToLogin).then((result:string):void=>{
+postLogin(dataToLogin).then((result:BodyResponseLogin):void=>{
     console.log(result);
 }).catch((error):void=>{
     console.log(` =( : ${error})`);

@@ -14,6 +14,7 @@ function postLogin(data) {
     return __awaiter(this, void 0, void 0, function* () {
         const headers = {
             'Content-Type': 'application/json'
+            // 'Authorization': 'Bearer <token>'
         };
         const reqOptions = {
             method: 'POST',
@@ -29,7 +30,7 @@ function postLogin(data) {
         }
         const responseBodyLogin = yield result.json();
         console.log(`Result token: ${responseBodyLogin.data.token}`);
-        return 'finished';
+        return responseBodyLogin;
     });
 }
 const dataToLogin = {
