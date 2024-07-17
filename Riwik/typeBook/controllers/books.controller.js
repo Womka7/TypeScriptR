@@ -34,9 +34,21 @@ class BooksController {
                 throw new Error("Not authenticated: ");
             }
             const responseBodyLogin = yield result.json();
-            console.log(`Result token: ${responseBodyLogin.data.token}`);
-            return responseBodyLogin;
-            // console.log(`${this.urlApi} login`);
+            const token = (`${responseBodyLogin.data.token}`);
+            return token;
+        });
+    }
+    getListBooks(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let url = 'api/v1/books';
+            const response = yield fetch(this.urlApi + url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.postLogin(data)}'`
+                }
+            });
+            const books = yield response.json();
+            return books;
         });
     }
 }

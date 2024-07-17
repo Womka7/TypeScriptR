@@ -18,8 +18,10 @@ function main() {
         };
         const booksController = new books_controller_js_1.BooksController('http://190.147.64.47:5155/');
         try {
-            const resultLogin = yield booksController.postLogin(dataToLogin);
-            console.log(resultLogin);
+            // const resultLogin:string=await booksController.postLogin(dataToLogin);
+            //     console.log(resultLogin);
+            const ListBooks = yield booksController.getListBooks(dataToLogin);
+            console.log(ListBooks);
         }
         catch (e) {
             console.log(` =( : ${e})`);

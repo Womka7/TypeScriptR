@@ -1,4 +1,4 @@
-import { RequestLoginBooks, ResponseLoginBooks } from "../models/books.models.js";
+import { Datum, IListBooks, RequestLoginBooks, ResponseLoginBooks } from "../models/books.models.js";
 
 export class BooksController {
 
@@ -35,5 +35,21 @@ export class BooksController {
         return responseBodyLogin;
 
         // console.log(`${this.urlApi} login`);
+    }
+
+
+    
+    async getListBooks(data: RequestLoginBooks):Promise<Datum[]>{ 
+        let url: string ='api/v1/books';
+
+        const response = await fetch(this.urlApi+url,{
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${}`
+            }
+        })
+
+        const books:Datum[] = await response.json();
+        return books;
     }
 }
