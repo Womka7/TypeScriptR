@@ -8,37 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const domain = 'http://190.147.64.47:5155/';
-const endpointLogin = 'api/v1/auth/login';
-function postLogin(data) {
+Object.defineProperty(exports, "__esModule", { value: true });
+const books_controller_js_1 = require("./controllers/books.controller.js");
+function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const headers = {
-            'Content-Type': 'application/json'
-            // 'Authorization': 'Bearer <token>'
+        const dataToLogin = {
+            email: 'prueba@prueba.pru',
+            password: 'C0ntr4S3gu++r4'
         };
-        const reqOptions = {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(data)
-        };
-        const url = domain + endpointLogin;
-        const result = yield fetch(url, reqOptions);
-        console.log(`Status code: ${result.status}`);
-        if (result.status !== 201) {
-            console.log(`Response body: ${(yield result.json()).message}`);
-            throw new Error("Not authenticated: ");
+        const booksController = new books_controller_js_1.BooksController('http://190.147.64.47:5155/');
+        try {
+            const resultLogin = yield booksController.postLogin(dataToLogin);
+            console.log(resultLogin);
         }
-        const responseBodyLogin = yield result.json();
-        console.log(`Result token: ${responseBodyLogin.data.token}`);
-        return responseBodyLogin;
+        catch (e) {
+            console.log(` =( : ${e})`);
+        }
     });
 }
-const dataToLogin = {
-    email: 'prueba@prueba.pru',
-    password: 'C0ntr4S3gu++r4'
-};
-postLogin(dataToLogin).then((result) => {
-    console.log(result);
-}).catch((error) => {
-    console.log(` =( : ${error})`);
-});
+main();
