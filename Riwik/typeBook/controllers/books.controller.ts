@@ -3,9 +3,11 @@ import { Datum, IListBooks, RequestLoginBooks, ResponseLoginBooks } from "../mod
 export class BooksController {
 
     private urlApi:string;
+    private token:string | null;
     
-    constructor(urlApi:string){
+    constructor(urlApi:string,){
         this.urlApi=urlApi;
+        this.token=null;
 
     }
     
@@ -32,24 +34,42 @@ export class BooksController {
         const responseBodyLogin:ResponseLoginBooks= await result.json();
         console.log(`Result token: ${responseBodyLogin.data.token}`);
         
+        this.token=responseBodyLogin.data.token;
+
         return responseBodyLogin;
 
-        // console.log(`${this.urlApi} login`);
     }
 
 
     
-    async getListBooks(data: RequestLoginBooks):Promise<Datum[]>{ 
-        let url: string ='api/v1/books';
+    async getListBooks():Promise<Datum[]>{ 
+        if (!this.token) {
+            throw new Error("Not authenticated: No token found");
+        }
 
-        const response = await fetch(this.urlApi+url,{
+        const endpointGetBooks: string ='api/v1/books';
+
+        const reqOptions:RequestInit={
+           
+        };
+
+        const url:string=this.urlApi + endpointGetBooks;
+        const response:Response = await fetch(url,{
             method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${}`
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
             }
-        })
+        });
 
-        const books:Datum[] = await response.json();
-        return books;
+        console.log(`Status code: ${response.status}`);
+        if (response.status !== 200) {
+            console.log(`Response body: ${(await response.json()).message}`);
+            throw new Error("Failed to fetch books");
+        }
+        const responseBody: IListBooks = await response.json();
+        console.log(`Fetched ${responseBody.data.length} books`);
+
+        return responseBody.data;
     }
 }
