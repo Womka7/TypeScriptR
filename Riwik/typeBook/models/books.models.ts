@@ -11,44 +11,21 @@ export interface ResponseLoginBooks{
 
 export interface IListBooks {
     message: string;
-    data:    Datum[];
+    data:    Datalist[];
 }
 
-export interface Datum {
-    id:              string;
+export interface Datalist {
+    id?:              string;
     title:           string;
     author:          string;
     description:     string;
     summary:         string;
-    publicationDate: Date | null;
-    createdBy:       string;
-    updatedBy:       null;
-    deletedBy:       null;
-    createdAt:       Date;
-    updatedAt:       Date;
-    deletedAt:       null;
-    files:           any[];
-}
-
-export interface RequestCreateBook {
-    title:           string;
-    author:          string;
-    description:     string;
-    summary:         string;
-    publicationDate: Date;
-}
-
-export interface ResponseCreateBook {
-    message: string;
-    data: Datum;
-}
-
-export interface ResponseUpdateBook {
-    message: string;
-    data: Datum;
-}
-
-export interface ResponseDeleteBook {
-    message: string;
-    data: { id: string };
+    publicationDate?: Date | null;
+    createdBy?:       string;
+    updatedBy?:       null;
+    deletedBy?:       null;
+    createdAt?:       Date;
+    updatedAt?:       Date;
+    deletedAt?:       null;
+    files?:           any[];
 }
