@@ -1,4 +1,4 @@
-import { Datum, IListBooks, RequestLoginBooks, ResponseLoginBooks } from "../models/books.models.js";
+import { Datum, IListBooks, RequestCreateBook, RequestLoginBooks, ResponseCreateBook, ResponseDeleteBook, ResponseLoginBooks, ResponseUpdateBook } from "../models/books.models.js";
 
 export class BooksController {
 
@@ -43,15 +43,9 @@ export class BooksController {
 
     
     async getListBooks():Promise<Datum[]>{ 
-        if (!this.token) {
-            throw new Error("Not authenticated: No token found");
-        }
+        this.validateToken();
 
         const endpointGetBooks: string ='api/v1/books';
-
-        const reqOptions:RequestInit={
-           
-        };
 
         const url:string=this.urlApi + endpointGetBooks;
         const response:Response = await fetch(url,{
@@ -71,5 +65,131 @@ export class BooksController {
         console.log(`Fetched ${responseBody.data.length} books`);
 
         return responseBody.data;
+    }
+
+    async postCreateBook(data:RequestCreateBook):Promise<ResponseCreateBook>{
+        this.validateToken();
+
+        const endpointCreateBook: string = 'api/v1/books';
+        const url: string = this.urlApi + endpointCreateBook;
+
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.token}`
+        };
+
+        const reqOptions: RequestInit = {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(data)
+        };
+
+        const result: Response = await fetch(url, reqOptions);
+
+        console.log(`Status code: ${result.status}`);
+        if (result.status !== 201) {
+            const responseBody = await result.json();
+            console.log(`Response body: ${responseBody.message}`);
+            throw new Error("Failed to create book: " + responseBody.message);
+        }
+        const responseBody: ResponseCreateBook = await result.json();
+        console.log(`Created book with id: ${responseBody.data.id}`);
+
+        return responseBody;
+    }
+
+    async putUpdateBook(bookId: string, data: RequestCreateBook): Promise<ResponseUpdateBook> {
+        this.validateToken();
+
+        const endpointUpdateBook: string = `api/v1/books/${bookId}`;
+        const url: string = this.urlApi + endpointUpdateBook;
+
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.token}`
+        };
+
+        const reqOptions: RequestInit = {
+            method: 'PUT',
+            headers: headers,
+            body: JSON.stringify(data)
+        };
+
+        const result: Response = await fetch(url, reqOptions);
+
+        console.log(`Status code: ${result.status}`);
+        if (result.status !== 200) {
+            const responseBody = await result.json();
+            console.log(`Response body: ${responseBody.message}`);
+            throw new Error("Failed to update book: " + responseBody.message);
+        }
+        const responseBody: ResponseUpdateBook = await result.json();
+        console.log(`Updated book with id: ${responseBody.data.id}`);
+
+        return responseBody;
+    }
+
+    async deleteBook(bookId: string): Promise<ResponseDeleteBook> {
+        this.validateToken();
+
+        const endpointDeleteBook: string = `api/v1/books/${bookId}`;
+        const url: string = this.urlApi + endpointDeleteBook;
+
+        const headers: Record<string, string> = {
+            'Authorization': `Bearer ${this.token}`
+        };
+
+        const reqOptions: RequestInit = {
+            method: 'DELETE',
+            headers: headers
+        };
+
+        const result: Response = await fetch(url, reqOptions);
+
+        console.log(`Status code: ${result.status}`);
+        if (result.status !== 200) {
+            const responseBody = await result.json();
+            console.log(`Response body: ${responseBody.message}`);
+            throw new Error("Failed to delete book: " + responseBody.message);
+        }
+        const responseBody: ResponseDeleteBook = await result.json();
+        console.log(`Deleted book with id: ${responseBody.data.id}`);
+
+        return responseBody;
+    }
+
+    async deleteAllBooks(): Promise<ResponseDeleteBook[]> {
+        this.validateToken();
+
+        const endpointDeleteBooks: string = 'api/v1/books';
+        const url: string = this.urlApi + endpointDeleteBooks;
+
+        const headers: Record<string, string> = {
+            'Authorization': `Bearer ${this.token}`
+        };
+
+        const reqOptions: RequestInit = {
+            method: 'DELETE',
+            headers: headers
+        };
+
+        const result: Response = await fetch(url, reqOptions);
+
+        console.log(`Status code: ${result.status}`);
+        if (result.status !== 200) {
+            const responseBody = await result.json();
+            console.log(`Response body: ${responseBody.message}`);
+            throw new Error("Failed to delete all books: " + responseBody.message);
+        }
+        const responseBody: ResponseDeleteBook[] = await result.json();
+        console.log(`Deleted all books`);
+
+        return responseBody;
+    }
+
+    private validateToken() {
+        if (!this.token) {
+            throw new Error("Not authenticated: No token found");
+        }
     }
 }

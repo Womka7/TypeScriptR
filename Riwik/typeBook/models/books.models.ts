@@ -29,3 +29,26 @@ export interface Datum {
     deletedAt:       null;
     files:           any[];
 }
+
+export interface RequestCreateBook {
+    title:           string;
+    author:          string;
+    description:     string;
+    summary:         string;
+    publicationDate: Date;
+}
+
+export interface ResponseCreateBook {
+    message: string;
+    data: Datum;
+}
+
+export interface ResponseUpdateBook {
+    message: string;
+    data: Datum;
+}
+
+export interface ResponseDeleteBook {
+    message: string;
+    data: { id: string };
+}
