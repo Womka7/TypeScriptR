@@ -20,15 +20,15 @@ async function main(): Promise <void> {
 
         // instancia de crear book
 
-        // const newBook= {
-        //     title: 'la iliada',
-        //     author: 'Homero',
-        //     description: 'libro griego-epico',
-        //     summary: 'narra los eventos de la Guerra de Troya, especialmente centrados en el heroico guerrero Aquiles. La historia se desarrolla durante las últimas semanas del conflicto, destacando las tensiones entre los líderes griegos, particularmente entre Agamenón y Aquiles. El poema comienza con la ira de Aquiles tras ser despojado de su concubina, Briseida, por Agamenón.'
-        // };
+        const newBook= {
+            title: 'la bascula',
+            author: 'Homero',
+            description: 'libro griego-epico',
+            summary: 'narra los eventos de la Guerra de Troya, especialmente centrados en el heroico guerrero Aquiles. La historia se desarrolla durante las últimas semanas del conflicto, destacando las tensiones entre los líderes griegos, particularmente entre Agamenón y Aquiles. El poema comienza con la ira de Aquiles tras ser despojado de su concubina, Briseida, por Agamenón.'
+        };
 
-        // const createdBook:IListBooks = await booksController.postCreateBook(newBook);
-        // console.log(createdBook);
+        const createdBook:IListBooks = await booksController.postCreateBook(newBook);
+        console.log(createdBook);
         
         // instancia de eliminar book
 
