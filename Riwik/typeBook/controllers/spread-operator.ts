@@ -19,4 +19,10 @@ const ages2=[50,60,70];
 const  combineArray = [...agess, ...copyAges, ...ages2];
 console.log(combineArray);
 
-//
+//Reemplazar valores en object
+const person ={name:'Juan',age:60};
+const updatePerson ={ ...person, age:59};
+console.log(updatePerson);
+
+
+
