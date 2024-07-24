@@ -1,0 +1,12 @@
+{
+  "name": "practice-typescript",
+  "version": "1.0.0",
+  "description": "project to practice typescript terms global",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fast":"tsc && node index.js"
+  },
+  "author": "Karina",
+  "license": "ISC"
+}
